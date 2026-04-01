@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preoperative Testing Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── CSS custom properties (theme) ── */
+:root {
+  --app-bg:#f4f6fb; --card-bg:#fff; --card-border:transparent;
+  --card-shadow:0 1px 10px rgba(0,0,0,0.06);
+  --text-primary:#0f172a; --text-secondary:#475569;
+  --text-note:#374151; --text-hint:#6b7280;
+  --border:#e2e8f0; --border-light:#f1f4f8;
+  --input-bg:#fafafa; --input-bg-on:#eef2ff; --input-border-on:#6366f1;
+  --thumb-bg:#f1f4f8; --check-border:#c4c9d4;
+  --toggle-off:#d1d5db; --cat-color:#94a3b8;
+  --back-bg:#fff; --back-text:#475569; --back-border:#e2e8f0;
+  --gl-bg:#f8fafc; --font:'DM Sans',system-ui,sans-serif;
+}
+html.dark {
+  --app-bg:#0f172a; --card-bg:#1e293b; --card-border:#334155;
+  --card-shadow:0 1px 6px rgba(0,0,0,0.4);
+  --text-primary:#f1f5f9; --text-secondary:#94a3b8;
+  --text-note:#cbd5e1; --text-hint:#64748b;
+  --border:#334155; --border-light:#1e293b;
+  --input-bg:#0f172a; --input-bg-on:#1e1b4b; --input-border-on:#818cf8;
+  --thumb-bg:#334155; --check-border:#475569;
+  --toggle-off:#334155; --cat-color:#475569;
+  --back-bg:#1e293b; --back-text:#94a3b8; --back-border:#334155;
+  --gl-bg:#111827;
+}
+
+/* ── Reset & base ── */
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font);background:var(--app-bg);min-height:100vh;padding-bottom:56px;transition:background .25s;}
+button{font-family:var(--font);cursor:pointer;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:#334155;border-radius:2px;}
+
+/* ── Header ── */
+.hdr{background:linear-gradient(135deg,#1e1b4b 0%,#4f46e5 100%);color:#fff;padding:16px 18px 20px;text-align:center;position:sticky;top:0;z-index:10;box-shadow:0 2px 20px #1e1b4b55;}
+.hdr-org{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.65;margin-bottom:4px;}
+.hdr-title{font-size:19px;font-weight:400;letter-spacing:-.3px;font-family:'DM Serif Display',Georgia,serif;}
+.hdr-beta{display:inline-block;margin-top:5px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:1px 8px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.75);}
+.dark-btn{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.steps{margin-top:14px;display:flex;align-items:center;justify-content:center;}
+.sdot{width:26px;height:26px;border-radius:50%;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.sdot.done{background:#6ee7b7;color:#064e3b;}
+.sdot.active{background:#fff;color:#4f46e5;}
+.sdot.future{background:rgba(255,255,255,.2);color:rgba(255,255,255,.5);}
+.sline{width:40px;height:2px;transition:background .3s;}
+.sline.done{background:#6ee7b7;}
+.sline.future{background:rgba(255,255,255,.2);}
+.slabel{font-size:11px;opacity:.7;margin-top:6px;}
+
+/* ── Layout ── */
+.wrap{max-width:580px;margin:0 auto;padding:16px 13px;}
+.card{background:var(--card-bg);border-radius:14px;padding:18px 16px;box-shadow:var(--card-shadow);margin-bottom:12px;border:1px solid var(--card-border);}
+.sh{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:3px;font-family:'DM Serif Display',Georgia,serif;}
+.ss{font-size:12px;color:var(--text-secondary);margin-bottom:13px;}
+
+/* ── Risk / ASA buttons ── */
+.rbtn{width:100%;padding:13px 15px;border-radius:12px;border:2px solid var(--border);background:var(--card-bg);text-align:left;margin-bottom:8px;transition:all .18s;}
+.rbtn:last-child{margin-bottom:0;}
+.rico{width:38px;height:38px;border-radius:9px;background:var(--thumb-bg);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;transition:all .18s;}
+.examples-strip{margin-top:10px;padding:9px 15px 9px 49px;border-top:1px dashed var(--border);margin-left:-15px;margin-right:-15px;margin-bottom:-13px;border-radius:0 0 8px 8px;}
+
+.abtn{width:100%;padding:13px 14px;border-radius:10px;border:2px solid var(--border);background:var(--card-bg);text-align:left;margin-bottom:8px;transition:all .18s;}
+.adesc{font-size:12.5px;color:var(--text-note);white-space:pre-line;line-height:1.7;padding-left:41px;border-top:1px dashed var(--border);padding-top:8px;font-style:italic;margin-top:8px;}
+
+/* ── Toggle ── */
+.tgl{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:10px;margin-bottom:7px;cursor:pointer;border:1.5px solid var(--border);background:var(--input-bg);transition:all .15s;user-select:none;}
+.tgl.on{border-color:var(--input-border-on);background:var(--input-bg-on);}
+.tgl-text{padding-right:12px;flex:1;}
+.tgl-lbl{font-size:13.5px;font-weight:500;color:var(--text-primary);}
+.tgl-note{font-size:12px;color:var(--text-note);margin-top:4px;line-height:1.45;font-style:italic;background:rgba(0,0,0,.04);border-left:2px solid var(--border);padding:2px 0 2px 7px;border-radius:0 3px 3px 0;}
+html.dark .tgl-note{background:rgba(255,255,255,.04);border-left-color:#475569;}
+.tgl-track{width:40px;height:22px;border-radius:11px;background:var(--toggle-off);position:relative;transition:background .2s;flex-shrink:0;}
+.tgl.on .tgl-track{background:#6366f1;}
+.tgl-thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:left .2s;}
+.tgl.on .tgl-thumb{left:20px;}
+
+/* ── Condition items ── */
+.ci{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-radius:8px;margin-bottom:5px;border:1.5px solid var(--border);background:var(--card-bg);cursor:pointer;user-select:none;transition:all .15s;}
+.ci.on{border-color:var(--input-border-on);background:var(--input-bg-on);}
+.ci-box{width:18px;height:18px;border-radius:4px;border:2px solid var(--check-border);background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .15s;}
+.ci.on .ci-box{border-color:#6366f1;background:#6366f1;}
+.ci-lbl{font-size:13px;font-weight:400;color:var(--text-primary);line-height:1.4;}
+.ci.on .ci-lbl{font-weight:600;}
+.ci-note{font-size:12px;color:var(--text-note);margin-top:5px;line-height:1.45;font-style:italic;background:rgba(0,0,0,.04);border-left:2px solid #94a3b8;padding:3px 0 3px 7px;border-radius:0 4px 4px 0;}
+html.dark .ci-note{background:rgba(255,255,255,.04);border-left-color:#475569;}
+.cat-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--cat-color);margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid var(--border-light);}
+.cat-grp{margin-bottom:18px;}
+.cat-grp:last-child{margin-bottom:0;}
+
+/* ── Condition banner ── */
+.cb{border-radius:14px;padding:14px 16px;margin-bottom:12px;border:1.5px solid #c7d2fe;background:#eef2ff;}
+html.dark .cb{background:#1a1f3d;border-color:#3730a3;}
+.cb-t{font-size:13.5px;font-weight:700;color:#4338ca;margin-bottom:3px;}
+html.dark .cb-t{color:#a5b4fc;}
+.cb-s{font-size:12px;color:#5b5ea6;line-height:1.5;}
+html.dark .cb-s{color:#818cf8;}
+.cb-c{margin-top:8px;font-size:12px;font-weight:600;color:#4338ca;}
+html.dark .cb-c{color:#a5b4fc;}
+
+/* ── Buttons ── */
+.btn-p{width:100%;padding:14px 0;border-radius:10px;border:none;background:#4f46e5;color:#fff;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 4px 14px #4f46e544;}
+.btn-p.off{background:#94a3b8;cursor:not-allowed;box-shadow:none;}
+html.dark .btn-p.off{background:#1e293b;}
+.btn-back{padding:7px 13px;border-radius:8px;border:1px solid var(--back-border);background:var(--back-bg);color:var(--back-text);font-weight:600;font-size:13px;cursor:pointer;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.btn-reset{width:100%;padding:13px;border-radius:10px;border:1.5px solid var(--border);background:var(--card-bg);color:var(--text-secondary);font-weight:600;font-size:14px;cursor:pointer;margin-top:4px;}
+
+/* ── Summary banner ── */
+.sum-banner{border-radius:14px;padding:18px 20px;margin-bottom:12px;}
+.sum-rl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.sum-count{font-size:22px;font-weight:800;color:var(--text-primary);font-family:'DM Serif Display',Georgia,serif;}
+.sum-sub{font-size:12.5px;color:var(--text-secondary);margin-top:4px;}
+
+/* ── Lab items ── */
+.grp-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--cat-color);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+.lab-row{display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:8px;margin-bottom:5px;}
+.lab-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.lab-name{font-size:13.5px;font-weight:600;}
+
+/* ── Note / info boxes ── */
+.nbox{border-radius:8px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;line-height:1.6;}
+.nbox.warn{background:#fffbeb;border:1px solid #fde68a;color:#78350f;}
+.nbox.info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;}
+html.dark .nbox.warn{background:#2a1f0a;border-color:#92400e;color:#fcd34d;}
+html.dark .nbox.info{background:#0c1f2e;border-color:#1e40af;color:#93c5fd;}
+.nbox-title{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.nbox-title.warn{color:#92400e;}
+.nbox-title.info{color:#1e40af;}
+html.dark .nbox-title.warn{color:#fbbf24;}
+html.dark .nbox-title.info{color:#93c5fd;}
+
+/* ── Guidelines ── */
+.gl-card{border-radius:14px;padding:18px 16px;margin-bottom:12px;border:1px solid var(--border);background:var(--gl-bg);}
+.gl-title{font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:9px;}
+.gl-item{font-size:12px;color:var(--text-note);padding-left:11px;border-left:2px solid var(--border);margin-bottom:7px;line-height:1.6;}
+
+/* ── Beta screen ── */
+.beta-wrap{min-height:100vh;background:var(--app-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;}
+.beta-hdr{background:linear-gradient(135deg,#1e1b4b 0%,#4f46e5 100%);border-radius:16px;padding:20px 28px;text-align:center;width:100%;max-width:520px;margin-bottom:18px;}
+.beta-body{width:100%;max-width:520px;background:#fff7ed;border:2px solid #f97316;border-radius:14px;padding:20px 20px 18px;margin-bottom:14px;}
+html.dark .beta-body{background:#2d1a0a;border-color:#92400e;}
+.beta-bullets{background:rgba(154,52,18,.05);border:1px solid #fed7aa;border-radius:8px;padding:12px 14px;margin-bottom:16px;}
+html.dark .beta-bullets{background:rgba(0,0,0,.25);border-color:#78350f;}
+.beta-brow{display:flex;gap:8px;margin-bottom:8px;font-size:12.5px;color:#7c2d12;line-height:1.55;}
+.beta-brow:last-child{margin-bottom:0;}
+html.dark .beta-brow{color:#fcd34d;}
+.beta-chk-row{display:flex;align-items:flex-start;gap:10px;cursor:pointer;user-select:none;}
+.beta-chk{width:20px;height:20px;border-radius:5px;flex-shrink:0;margin-top:1px;border:2px solid #d1d5db;background:transparent;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.beta-chk.on{border-color:#4f46e5;background:#4f46e5;}
+.beta-chk-txt{font-size:13px;font-weight:500;color:#374151;line-height:1.5;}
+html.dark .beta-chk-txt{color:#e2e8f0;}
+.beta-foot-wrap{width:100%;max-width:520px;}
+.btn-enter{width:100%;padding:14px 0;border-radius:10px;border:none;background:#e2e8f0;color:#9ca3af;font-weight:700;font-size:15px;cursor:not-allowed;transition:all .2s;}
+.btn-enter.ready{background:#4f46e5;color:#fff;cursor:pointer;box-shadow:0 4px 14px #4f46e544;}
+html.dark .btn-enter{background:#1e293b;color:#475569;}
+html.dark .btn-enter.ready{background:#4f46e5;color:#fff;}
+.beta-foot{text-align:center;margin-top:10px;font-size:11px;color:#9ca3af;}
+html.dark .beta-foot{color:#475569;}
+
+@media(max-width:400px){.wrap{padding:12px 10px;}.card{padding:15px 13px;}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════
+
+const RISK_LEVELS = [
+  { id:"very_low", label:"Very Low Risk",     subtitle:"Ophthalmic surgery only",                              icon:"👁",  tag:"VLR", color:"#0d9488", light:"#f0fdfa", lightDark:"#0d4a40", border:"#99f6e4", dark:"#0f766e" },
+  { id:"low",      label:"Low Risk",          subtitle:"Outpatient, minimal physiological stress",             icon:"🩺", tag:"LR",  color:"#2563eb", light:"#eff6ff", lightDark:"#1e2d5a", border:"#bfdbfe", dark:"#1d4ed8",
+    examples:"Colonoscopy, EGD, herniorrhaphy, cystoscopy, vasectomy, breast biopsy, myringotomy, circumcision, endoscopic procedures" },
+  { id:"intermediate", label:"Intermediate Risk", subtitle:"Moderate stress, minimal blood loss",             icon:"⚡", tag:"IR",  color:"#d97706", light:"#fffbeb", lightDark:"#3a1f00", border:"#fde68a", dark:"#b45309",
+    examples:"Thyroidectomy, hysterectomy, myomectomy, hip/knee replacement, laminectomy, laparoscopic procedures, partial colectomy" },
+  { id:"high",     label:"High Risk",          subtitle:"Significant fluid shifts, blood loss, ICU anticipated",icon:"🔺", tag:"HR",  color:"#dc2626", light:"#fff1f2", lightDark:"#3a0a0a", border:"#fecdd3", dark:"#b91c1c",
+    examples:"Major cardiothoracic, major aortic/intracranial surgery, major spinal reconstruction, major GI reconstruction, non-aortic vascular" },
+];
+
+const ASA_CLASSES = [
+  { id:"asa1",  label:"ASA 1",     short:"Healthy",                   color:"#059669",
+    desc:"Normal healthy patient — non-smoking, no or minimal alcohol use" },
+  { id:"asa2",  label:"ASA 2",     short:"Mild Disease",              color:"#2563eb",
+    desc:"Mild systemic disease, no functional limitations\nEx: smoker, social drinker, pregnancy, BMI 30–40, well-controlled DM/HTN, mild lung disease" },
+  { id:"asa34", label:"ASA 3 / 4", short:"Severe / Life-Threatening", color:"#dc2626",
+    desc:"ASA 3: Severe disease with functional limitations\n  Ex: Poorly controlled DM/HTN, COPD, BMI ≥40, ESRD on dialysis, pacemaker, prior MI/CVA >3 months\n\nASA 4: Constant threat to life\n  Ex: Recent MI/CVA/TIA (<3 months), ongoing cardiac ischemia, severe EF reduction, sepsis, DIC" },
+];
+
+const CONDITIONS = [
+  { id:"age70",         cat:"Demographics",          label:"Age > 70 years",                                              labs:["HGB/HCT","BMP","CXR","EKG"] },
+  { id:"female1055",    cat:"Demographics",          label:"Female, Age 10–55 years",      note:"Exceptions: pregnancy, hysterectomy w/ BSO",                                                                                                           labs:["UPT"] },
+  { id:"bloodLoss",     cat:"Surgical Factors",      label:"Expected Blood Loss > 500 mL", note:"Major vascular, intrathoracic, intraabdominal, multi-level spinal, or intracranial. If prior pregnancy/transfusion within 3 months → draw sample within 72 hrs of surgery.", labs:["HGB/HCT","CBC","TYPE & SCREEN\u2021"] },
+  { id:"thoracic",      cat:"Surgical Factors",      label:"Thoracic Surgery (planned)",   note:"Timing: all labs within 7 days; PT/INR within 3 days if on anticoagulant; CXR within 21 days; EKG within 90 days.",                                  labs:["CBC","TYPE & SCREEN\u2021","PT/INR","PTT","PLATELETS","CXR","EKG"] },
+  { id:"hipDiep",       cat:"Surgical Factors",      label:"Hip Revision or DIEP Flap Surgery",                                                                                                                                                          labs:["HGB/HCT","TYPE & SCREEN\u2021"] },
+  { id:"cardiovascular",cat:"Cardiovascular",        label:"Cardiovascular Disease",        note:"CAD, valvular disease, previous MI/angina, cardiac stents, CABG/ACB",                                                                                 labs:["HGB/HCT","CXR","EKG"] },
+  { id:"htn",           cat:"Cardiovascular",        label:"Hypertension (HTN)",                                                                                                                                                                          labs:["BMP","EKG"] },
+  { id:"pulmonary",     cat:"Pulmonary",             label:"Chronic Pulmonary Disease",                                                                                                                                                                   labs:["CBC","CXR"] },
+  { id:"diabetes",      cat:"Metabolic / Endocrine", label:"Type 1 or Type 2 Diabetes, or Random Glucose > 250 mg/dL", note:"Finger stick glucose required on day of surgery for all diabetic patients",                                               labs:["BMP","GLUCOSE AM","EKG"] },
+  { id:"diuretic",      cat:"Metabolic / Endocrine", label:"Use of Diuretic",                                                                                                                                                                             labs:["BMP"] },
+  { id:"steroids",      cat:"Metabolic / Endocrine", label:"Steroid Use > 3 Months",                                                                                                                                                                     labs:["BMP","GLUCOSE AM"] },
+  { id:"obesity",       cat:"Metabolic / Endocrine", label:"Severe Obesity (BMI > 40)",                                                                                                                                                                  labs:["BMP","CXR","EKG"] },
+  { id:"cachexia",      cat:"Metabolic / Endocrine", label:"Cachexia / Underweight (BMI < 18.5)",                                                                                                                                                        labs:["HGB/HCT","CBC"] },
+  { id:"renal",         cat:"Renal",                 label:"Renal Disease",                                                                                                                                                                               labs:["HGB/HCT","BMP","EKG"] },
+  { id:"esrd",          cat:"Renal",                 label:"ESRD or Abnormal K\u207a within 30 days",                                                                                                                                                     labs:["K+ AM"] },
+  { id:"bleeding",      cat:"Hematologic",           label:"Bleeding Disorder",             note:"Sickle Cell Anemia, Thalassemia, or Hgb \u2264 7.5",                                                                                                  labs:["HGB/HCT","CBC","TYPE & SCREEN\u2021","PT/INR","PTT"] },
+  { id:"anemia",        cat:"Hematologic",           label:"Anemia (Hgb < 9 in past year, or transfusion in past year)",                                                                                                                                  labs:["HGB/HCT","TYPE & SCREEN\u2021"] },
+  { id:"warfarin",      cat:"Hematologic",           label:"Anticoagulant: Warfarin (Coumadin\u00ae)",                                                                                                                                                    labs:["PT/INR","PTT"] },
+  { id:"heparin",       cat:"Hematologic",           label:"Anticoagulant: Heparin or Enoxaparin",                                                                                                                                                        labs:["CBC","PT/INR","PTT","PLATELETS"] },
+  { id:"hepatic",       cat:"Hepatic",               label:"Hepatic Disease (Cirrhosis)",                                                                                                                                                                 labs:["CBC","PT/INR","PTT","PLATELETS","CMP"] },
+  { id:"malignancy",    cat:"Oncologic",             label:"Malignancy",                    note:"PT/INR required for thoracic malignancies only",                                                                                                        labs:["HGB/HCT","CBC","PT/INR*"] },
+  { id:"seizure",       cat:"Neurologic",            label:"Seizure Disorder",                                                                                                                                                                             labs:["BMP","CMP"] },
+];
+
+const LAB_META = {
+  "HGB/HCT":              { display:"HGB / HCT",                          group:"Hematology"    },
+  "CBC":                  { display:"CBC",                                 group:"Hematology"    },
+  "TYPE & SCREEN\u2021":  { display:"Type & Screen \u2021",               group:"Blood Bank"    },
+  "PT/INR":               { display:"PT / INR",                           group:"Coagulation"   },
+  "PT/INR*":              { display:"PT / INR \u2733",                    group:"Coagulation"   },
+  "PTT":                  { display:"PTT",                                 group:"Coagulation"   },
+  "PLATELETS":            { display:"Platelet Count",                      group:"Coagulation"   },
+  "BMP":                  { display:"BMP \u2014 Basic Metabolic Panel",    group:"Chemistry"     },
+  "CMP":                  { display:"CMP \u2014 Comprehensive Metabolic Panel", group:"Chemistry"},
+  "K+ AM":                { display:"K\u207a AM of Procedure",            group:"Chemistry"     },
+  "GLUCOSE AM":           { display:"Glucose AM of Procedure",            group:"Chemistry"     },
+  "UPT":                  { display:"Urine Pregnancy Test (UPT)",         group:"Point of Care" },
+  "CXR":                  { display:"Chest X-Ray",                        group:"Imaging"       },
+  "EKG":                  { display:"EKG / ECG",                          group:"Cardiac"       },
+};
+
+const GROUP_ORDER = ["Hematology","Blood Bank","Coagulation","Chemistry","Point of Care","Imaging","Cardiac"];
+
+const GS_LIGHT = {
+  "Hematology":    { bg:"#fff1f2", txt:"#9f1239", bdr:"#fda4af", icon:"🩸" },
+  "Blood Bank":    { bg:"#fefce8", txt:"#713f12", bdr:"#fef08a", icon:"🏥" },
+  "Coagulation":   { bg:"#faf5ff", txt:"#6b21a8", bdr:"#d8b4fe", icon:"🧬" },
+  "Chemistry":     { bg:"#f0fdf4", txt:"#14532d", bdr:"#86efac", icon:"⚗️"  },
+  "Point of Care": { bg:"#f0f9ff", txt:"#0c4a6e", bdr:"#7dd3fc", icon:"💊" },
+  "Imaging":       { bg:"#f8fafc", txt:"#1e293b", bdr:"#cbd5e1", icon:"📷" },
+  "Cardiac":       { bg:"#fff7ed", txt:"#7c2d12", bdr:"#fdba74", icon:"❤️"  },
+};
+const GS_DARK = {
+  "Hematology":    { bg:"#2d1a1e", txt:"#fda4af", bdr:"#9f1239", icon:"🩸" },
+  "Blood Bank":    { bg:"#2a2010", txt:"#fde68a", bdr:"#92400e", icon:"🏥" },
+  "Coagulation":   { bg:"#1e1530", txt:"#d8b4fe", bdr:"#6b21a8", icon:"🧬" },
+  "Chemistry":     { bg:"#0f2318", txt:"#86efac", bdr:"#166534", icon:"⚗️"  },
+  "Point of Care": { bg:"#0c1f2e", txt:"#7dd3fc", bdr:"#0c4a6e", icon:"💊" },
+  "Imaging":       { bg:"#1a2433", txt:"#94a3b8", bdr:"#334155", icon:"📷" },
+  "Cardiac":       { bg:"#2a1a10", txt:"#fdba74", bdr:"#7c2d12", icon:"❤️"  },
+};
+
+const CATS = [...new Set(CONDITIONS.map(c => c.cat))];
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+
+const S = {
+  betaAck:false, betaChecked:false, dark:false,
+  step:1, risk:null, asa:null,
+  female:false, diabetic:false, esrd:false, recentEKG:true,
+  selected:new Set(),
+  spinal:false, ppm:false, aicd:false,
+};
+
+// ══════════════════════════════════════════
+//  LOGIC
+// ══════════════════════════════════════════
+
+function buildResults() {
+  const labSet=new Set(), notes=[], extras=[];
+  if (S.risk==="low"||S.risk==="very_low") {
+    if (S.female) labSet.add("UPT");
+    if (S.asa==="asa34") {
+      if (S.diabetic) { labSet.add("EKG"); notes.push("EKG: Required for ASA 3/4 diabetic patients"); }
+      if (S.esrd) {
+        labSet.add("K+ AM");
+        notes.push(S.risk==="low"?"K\u207a AM: Optional for ESRD patients (Low Risk procedure)":"K\u207a AM: Required for ESRD patients (Very Low Risk procedure)");
+      }
+      if (S.risk==="very_low"&&!S.recentEKG) { labSet.add("EKG"); notes.push("EKG: Added \u2014 no ECG documented within past 12 months for ASA 3/4 patient"); }
+    }
+  } else {
+    CONDITIONS.forEach(c => {
+      if (S.selected.has(c.id)) {
+        c.labs.forEach(l => labSet.add(l));
+        if (c.note) notes.push(c.label+": "+c.note);
+      }
+    });
+  }
+  if (labSet.has("CBC")&&labSet.has("HGB/HCT")) labSet.delete("HGB/HCT");
+  if (S.spinal&&!labSet.has("PLATELETS")) { labSet.add("PLATELETS"); extras.push("Platelet Count added \u2014 required within 30 days for spinal or epidural placement"); }
+  else if (S.spinal) extras.push("Platelet Count already included \u2014 required within 30 days for spinal or epidural placement");
+  if (S.ppm)  extras.push("Pacemaker (PPM): Interrogation report required within 12 months with documented battery longevity > 3 months");
+  if (S.aicd) extras.push("AICD / ICD: Interrogation report required within 6 months with documented battery longevity > 3 months");
+  const grouped={};
+  GROUP_ORDER.forEach(g=>grouped[g]=[]);
+  labSet.forEach(id=>{ const m=LAB_META[id]; if(m) grouped[m.group].push({id,display:m.display}); });
+  return {grouped,notes,extras,total:labSet.size};
+}
+
+// ══════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════
+
+function h(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function isLow(){ return S.risk==="low"||S.risk==="very_low"; }
+function ri(){ return RISK_LEVELS.find(r=>r.id===S.risk)||null; }
+function gs(){ return S.dark?GS_DARK:GS_LIGHT; }
+
+// ══════════════════════════════════════════
+//  RENDER FUNCTIONS
+// ══════════════════════════════════════════
+
+function renderHeader(){
+  const labels=["Procedure Risk",isLow()?"Patient Details":"Medical Conditions","Required Labs"];
+  const dots=[1,2,3].map((s,i)=>{
+    const cls=s<S.step?"done":s===S.step?"active":"future";
+    return `<div style="display:flex;align-items:center;">
+      <div class="sdot ${cls}">${s<S.step?"✓":s}</div>
+      ${i<2?`<div class="sline ${s<S.step?"done":"future"}"></div>`:""}
+    </div>`;
+  }).join("");
+  return `<div class="hdr">
+    <button class="dark-btn" onclick="toggleDark()">${S.dark?"☀️":"🌙"}</button>
+    <div class="hdr-org">Anesthesiology</div>
+    <div class="hdr-title">Preoperative Testing Guide</div>
+    <div class="hdr-beta">Beta</div>
+    <div class="steps">${dots}</div>
+    <div class="slabel">Step ${S.step} of 3 \u2014 ${labels[S.step-1]}</div>
+  </div>`;
+}
+
+function renderBeta(){
+  const warn=S.dark?"#fed7aa":"#9a3412";
+  const sub =S.dark?"#fdba74":"#7c2d12";
+  return `<div class="beta-wrap">
+    <div class="beta-hdr">
+      <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;opacity:.65;color:#fff;margin-bottom:4px;">Anesthesiology</div>
+      <div style="font-size:20px;font-weight:400;color:#fff;font-family:'DM Serif Display',Georgia,serif;">Preoperative Testing Guide</div>
+      <div style="display:inline-block;margin-top:10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:3px 12px;font-size:11px;font-weight:700;color:#fff;letter-spacing:1.2px;text-transform:uppercase;">Beta Version</div>
+    </div>
+    <div class="beta-body">
+      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
+        <span style="font-size:24px;line-height:1;flex-shrink:0;">⚠️</span>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:${warn};margin-bottom:6px;font-family:'DM Serif Display',Georgia,serif;">Beta Testing Notice</div>
+          <div style="font-size:13px;color:${sub};line-height:1.65;">This application is currently in <strong>beta testing</strong> and is intended for evaluation purposes only. Recommendations are based on institutional standing delegated orders and serve as a decision-support tool \u2014 not a substitute for independent clinical judgment.</div>
+        </div>
+      </div>
+      <div class="beta-bullets">
+        ${["Lab orders must be reviewed and verified by a licensed clinician before being placed.",
+           "Institutional protocols, patient-specific factors, and clinical context always take precedence.",
+           "This tool does not account for every clinical scenario or recent guideline update.",
+           "Report any errors or discrepancies to your department quality officer."
+          ].map(b=>`<div class="beta-brow"><span style="flex-shrink:0;margin-top:1px;">\u2022</span><span>${h(b)}</span></div>`).join("")}
+      </div>
+      <div class="beta-chk-row" onclick="toggleBetaChk()">
+        <div class="beta-chk${S.betaChecked?" on":""}">
+          ${S.betaChecked?`<span style="color:#fff;font-size:12px;font-weight:800;line-height:1;">\u2713</span>`:""}
+        </div>
+        <span class="beta-chk-txt">I understand this tool is in beta testing and will verify all recommendations with appropriate clinical resources before use.</span>
+      </div>
+    </div>
+    <div class="beta-foot-wrap">
+      <button class="btn-enter${S.betaChecked?" ready":""}" onclick="acceptBeta()">
+        ${S.betaChecked?"Enter Application \u2192":"Please acknowledge to continue"}
+      </button>
+      <div class="beta-foot">St. Luke\u2019s Health \u00b7 Anesthesiology \u00b7 Internal Use Only</div>
+    </div>
+  </div>`;
+}
+
+function renderToggle(lbl, note, val, fn){
+  return `<div class="tgl${val?" on":""}" onclick="${fn}">
+    <div class="tgl-text">
+      <div class="tgl-lbl">${h(lbl)}</div>
+      ${note?`<div class="tgl-note">${h(note)}</div>`:""}
+    </div>
+    <div class="tgl-track"><div class="tgl-thumb"></div></div>
+  </div>`;
+}
+
+function renderCI(c){
+  const on=S.selected.has(c.id);
+  return `<div class="ci${on?" on":""}" onclick="toggleCond('${c.id}')">
+    <div class="ci-box">${on?`<span style="color:#fff;font-size:11px;font-weight:800;line-height:1;">\u2713</span>`:""}</div>
+    <div style="flex:1;">
+      <div class="ci-lbl">${h(c.label)}</div>
+      ${c.note?`<div class="ci-note">${h(c.note.replace(/^⚠\s*/,""))}</div>`:""}
+    </div>
+  </div>`;
+}
+
+function renderStep1(){
+  return `<div class="card">
+    <div class="sh">Procedure Risk Level</div>
+    <div class="ss">Select the risk category of the planned surgery or procedure</div>
+    ${RISK_LEVELS.map(r=>{
+      const sel=S.risk===r.id;
+      const bg=sel?(S.dark?r.lightDark:r.light):"var(--card-bg)";
+      const ib=sel?r.color:"var(--thumb-bg)";
+      return `<button class="rbtn" onclick="selRisk('${r.id}')" style="border-color:${sel?r.color:"var(--border)"};background:${bg};${sel?`box-shadow:0 2px 12px ${r.color}33`:""};"><div style="display:flex;align-items:center;gap:11px;">
+        <div class="rico" style="background:${ib};">${sel?`<span style="color:#fff;font-weight:900;font-size:16px;">\u2713</span>`:r.icon}</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:7px;">
+            <span style="font-size:14.5px;font-weight:700;color:${sel?r.dark:"var(--text-primary)"};font-family:'DM Serif Display',Georgia,serif;">${h(r.label)}</span>
+            <span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;background:${sel?r.color:"var(--thumb-bg)"};color:${sel?"#fff":"var(--text-hint)"};">${r.tag}</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-top:1.5px;">${h(r.subtitle)}</div>
+        </div>
+      </div>${sel&&r.examples?`<div class="examples-strip" style="background:${S.dark?"rgba(255,255,255,.03)":"rgba(0,0,0,.02)"};">
+        <span style="font-size:11px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.6px;">Examples </span>
+        <span style="font-size:12.5px;color:var(--text-note);font-style:italic;">${h(r.examples)}</span>
+      </div>`:""}
+      </button>`;
+    }).join("")}
+  </div>
+  ${S.risk?`<button class="btn-p" onclick="goStep(2)">Continue \u2014 Select Patient Details \u2192</button>`:""}`;
+}
+
+function renderStep2(){
+  let out="";
+  if(isLow()){
+    out+=`<div class="card"><div class="sh">ASA Classification</div><div class="ss">Select the patient\u2019s physical status classification</div>
+      ${ASA_CLASSES.map(a=>{
+        const sel=S.asa===a.id;
+        const bg=sel?(S.dark?`${a.color}22`:`${a.color}0f`):"var(--card-bg)";
+        return `<button class="abtn" onclick="selAsa('${a.id}')" style="border-color:${sel?a.color:"var(--border)"};background:${bg};">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:${sel?8:0}px;">
+            <div style="width:32px;height:32px;border-radius:8px;flex-shrink:0;background:${sel?a.color:"var(--thumb-bg)"};display:flex;align-items:center;justify-content:center;color:${sel?"#fff":"var(--text-hint)"};font-weight:800;font-size:11px;">${sel?"\u2713":a.id==="asa1"?"1":a.id==="asa2"?"2":"3/4"}</div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:${sel?a.color:"var(--text-primary)"};font-family:'DM Serif Display',Georgia,serif;">${a.label}</div>
+              <div style="font-size:11.5px;color:var(--text-secondary);">${a.short}</div>
+            </div>
+          </div>
+          ${sel?`<div class="adesc">${h(a.desc)}</div>`:""}
+        </button>`;
+      }).join("")}
+    </div>`;
+    if(S.asa){
+      out+=`<div class="card"><div class="sh">Patient-Specific Factors</div><div class="ss">Select all that apply to this patient</div>
+        ${renderToggle("Female, Age 10\u201355 years","Exception: pregnancy or hysterectomy w/ BSO",S.female,"toggleFemale()")}
+        ${renderToggle("Type 1 or Type 2 Diabetic","",S.diabetic,"toggleDiabetic()")}
+        ${S.asa==="asa34"?renderToggle("ESRD (End-Stage Renal Disease)","",S.esrd,"toggleESRD()"):""}
+        ${S.asa==="asa34"&&S.risk==="very_low"?renderToggle("ECG on file within past 12 months","If absent, EKG will be recommended for ASA 3/4",S.recentEKG,"toggleRecentEKG()"):""}
+      </div>`;
+    }
+  } else {
+    out+=`<div class="cb">
+      <div class="cb-t">Select All Applicable Conditions</div>
+      <div class="cb-s">Required labs are determined by the patient\u2019s medical conditions. Select <strong>every condition that applies</strong>.</div>
+      ${S.selected.size?`<div class="cb-c">\u2713 ${S.selected.size} condition${S.selected.size!==1?"s":""} selected</div>`:""}
+    </div>
+    <div class="card">
+      ${CATS.map((cat,ci)=>`
+        <div class="cat-grp" style="margin-bottom:${ci<CATS.length-1?18:0}px;">
+          <div class="cat-lbl">${h(cat)}</div>
+          ${CONDITIONS.filter(c=>c.cat===cat).map(renderCI).join("")}
+        </div>`).join("")}
+    </div>`;
+  }
+  if(isLow()?S.asa:true){
+    out+=`<div class="card"><div class="sh">Procedural Considerations</div><div class="ss">Select any additional procedural factors</div>
+      ${renderToggle("Spinal or Epidural Planned","Platelet count will be required",S.spinal,"toggleSpinal()")}
+      ${renderToggle("Patient Has Pacemaker (PPM)","Interrogation report required",S.ppm,"togglePPM()")}
+      ${renderToggle("Patient Has AICD / ICD","Interrogation report required",S.aicd,"toggleAICD()")}
+    </div>`;
+  }
+  const can=isLow()?!!S.asa:true;
+  out+=`<button class="btn-p${can?"":" off"}" onclick="${can?"goStep(3)":"void(0)"}">View Required Labs \u2192</button>`;
+  return out;
+}
+
+function renderStep3(){
+  const r=ri(), res=buildResults(), hasLabs=res.total>0, GS=gs();
+  const asa=ASA_CLASSES.find(a=>a.id===S.asa);
+  const sumBg=S.dark?(r?.lightDark||"var(--card-bg)"):(r?.light||"#f8fafc");
+  let out=`<div class="sum-banner" style="background:${sumBg};border:1.5px solid ${r?.border||"var(--border)"};border-left:4px solid ${r?.color||"#94a3b8"};">
+    <div class="sum-rl" style="color:${r?.color||"var(--text-secondary)"};">${r?h(r.label)+" Procedure":""}</div>
+    <div class="sum-count">${hasLabs?res.total+" Test"+(res.total!==1?"s":"")+" Required":"No Labs Required"}</div>
+    <div class="sum-sub">${isLow()?(asa?.label||"")+(hasLabs?"":" \u2014 no preoperative labs indicated"):S.selected.size+" condition"+(S.selected.size!==1?"s":"")+" selected"}</div>
+  </div>`;
+
+  if(hasLabs){
+    out+=`<div class="card"><div class="sh">Required Preoperative Tests</div><div class="ss">All labs should be drawn within 30 days of procedure</div>
+      ${GROUP_ORDER.map(grp=>{
+        const labs=res.grouped[grp];
+        if(!labs||!labs.length) return "";
+        const s=GS[grp];
+        return `<div style="margin-bottom:14px;">
+          <div class="grp-lbl"><span style="font-size:14px;">${s.icon}</span>${grp}</div>
+          ${labs.map(l=>`<div class="lab-row" style="background:${s.bg};border:1px solid ${s.bdr};">
+            <div class="lab-dot" style="background:${s.txt};"></div>
+            <span class="lab-name" style="color:${s.txt};">${h(l.display)}</span>
+          </div>`).join("")}
+        </div>`;
+      }).join("")}
+    </div>`;
+  }
+
+  if(res.notes.length){
+    out+=`<div class="card"><div class="nbox-title warn">\u26a0\ufe0f Clinical Notes</div>
+      ${res.notes.map(n=>`<div class="nbox warn">${h(n)}</div>`).join("")}
+    </div>`;
+  }
+
+  if(res.extras.length){
+    out+=`<div class="card"><div class="nbox-title info">\uD83D\uDCCB Additional Requirements</div>
+      ${res.extras.map(n=>`<div class="nbox info">${h(n)}</div>`).join("")}
+    </div>`;
+  }
+
+  out+=`<div class="gl-card"><div class="gl-title">\uD83D\uDCCC General Testing Guidelines</div>
+    ${["Most labs must be drawn within 30 days of the procedure",
+       "ECG/EKG is current if performed within 12 months for asymptomatic patients",
+       "Finger stick glucose required on day of surgery for all diabetic patients",
+       "\u2021  Type & Screen must be drawn at St. Luke\u2019s (BSLMC, McNair, or OTM only) \u2014 blood bank will not release blood based on outside results",
+       "\u2733  PT/INR for malignancy: required for thoracic malignancies only"
+      ].map(n=>`<div class="gl-item">${h(n)}</div>`).join("")}
+  </div>`;
+
+  out+=`<button class="btn-reset" onclick="resetApp()">\uD83D\uDD04 Start New Assessment</button>`;
+  return out;
+}
+
+// ══════════════════════════════════════════
+//  RENDER ENTRY POINT
+// ══════════════════════════════════════════
+
+function render(scrollTop){
+  const savedScroll = scrollTop ? 0 : window.scrollY;
+  document.documentElement.classList.toggle("dark",S.dark);
+  const app=document.getElementById("app");
+
+  if(!S.betaAck){ app.innerHTML=renderBeta(); return; }
+
+  let out=renderHeader();
+  out+=`<div class="wrap">`;
+  if(S.step>1) out+=`<button class="btn-back" onclick="goStep(${S.step-1})">\u2190 Back</button>`;
+  if(S.step===1) out+=renderStep1();
+  if(S.step===2) out+=renderStep2();
+  if(S.step===3) out+=renderStep3();
+  out+=`</div>`;
+  app.innerHTML=out;
+  window.scrollTo(0, savedScroll);
+}
+
+// ══════════════════════════════════════════
+//  EVENT HANDLERS
+// ══════════════════════════════════════════
+
+function toggleDark(){ S.dark=!S.dark; render(false); }
+function toggleBetaChk(){ S.betaChecked=!S.betaChecked; render(false); }
+function acceptBeta(){ if(S.betaChecked){S.betaAck=true;render(true);} }
+function goStep(n){ S.step=n; render(true); }
+function selRisk(id){ S.risk=id; render(false); }
+function selAsa(id){ S.asa=id; render(false); }
+function toggleFemale(){ S.female=!S.female; render(false); }
+function toggleDiabetic(){ S.diabetic=!S.diabetic; render(false); }
+function toggleESRD(){ S.esrd=!S.esrd; render(false); }
+function toggleRecentEKG(){ S.recentEKG=!S.recentEKG; render(false); }
+function toggleSpinal(){ S.spinal=!S.spinal; render(false); }
+function togglePPM(){ S.ppm=!S.ppm; render(false); }
+function toggleAICD(){ S.aicd=!S.aicd; render(false); }
+function toggleCond(id){ S.selected.has(id)?S.selected.delete(id):S.selected.add(id); render(false); }
+function resetApp(){
+  S.step=1;S.risk=null;S.asa=null;
+  S.female=false;S.diabetic=false;S.esrd=false;S.recentEKG=true;
+  S.selected=new Set();S.spinal=false;S.ppm=false;S.aicd=false;
+  render(true);
+}
+
+// ══════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════
+render(true);
+</script>
+</body>
+</html>
